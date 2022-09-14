@@ -1,22 +1,46 @@
-from typing import List
+class Node:
+  def __init__(self, data):
+    self.data = data
+    self.next = None
 
-def insertionSort(array) -> List[int]:
-  l=len(array)
-  for i in range(1,l):
-    item=array[i]
-    currentitem=i-1
-    while ((array[currentitem]>item) and (currentitem>-1)):
-      array[currentitem+1]=array[currentitem]
-      currentitem=currentitem-1
-    array[currentitem+1]=item
-  return array  
 
-# data = [9, 5, 1, 4, 3]
+class Queue:
+  def __init__(self):
+    self.head = None
+    self.last = None
+
+  def enqueue(self, data) -> None:
+        new = Node(data)
+        if self.last is not None:
+            self.last.next = new
+        if self.head is None:
+            self.head = new
+        self.last = new
+
+  def dequeue(self) -> None:
+        if not self.head is None:
+            self.head = self.head.next
+            if self.head is None:
+              self.last = None
+
+  def status(self) -> None:
+        current = self.head
+        while current is not None:
+          print(current.data, end = "=>")
+          current = current.next
+        print("None")
+
+
+# Do not change the following code
+queue = Queue()
+operations = []
+for specific_operation in input().split(','):
+    operations.append(specific_operation.strip())
 input_data = input()
-data = []
-for item in input_data.split(', '):
-  if item.isnumeric():
-    data.append(int(item))
-  elif item.lstrip("-").isnumeric():
-    data.append(int(item))
-print(insertionSort(data))
+data = input_data.split(',')
+for i in range(len(operations)):
+  if operations[i] == "enqueue":
+    queue.enqueue(int(data[i]))
+  elif operations[i] == "dequeue":
+    queue.dequeue()
+queue.status()
